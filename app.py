@@ -74,12 +74,8 @@ st.title("City-Day AQI Predictor")
 st.write("Enter a city, date, and any available same-day pollutant readings.")
 
 training_data = load_data()
-first_date = training_data["Date"].min().date()
 last_date = training_data["Date"].max().date()
-st.caption(
-    f"Historical demo data: {first_date} to {last_date}. "
-    "Later-date estimates may be unreliable; this is not a live AQI service."
-)
+st.caption("Enter as many measured pollutant values as you can; missing readings are imputed.")
 
 with st.form("aqi_prediction_form"):
     city = st.selectbox("City", sorted(training_data["City"].dropna().unique()))
