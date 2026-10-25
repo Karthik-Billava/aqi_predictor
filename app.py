@@ -1,4 +1,3 @@
-from datetime import date
 from pathlib import Path
 
 import numpy as np
@@ -77,9 +76,9 @@ st.write("Enter a city, date, and any available same-day pollutant readings.")
 training_data = load_data()
 first_date = training_data["Date"].min().date()
 last_date = training_data["Date"].max().date()
-st.info(
-    f"This demonstration uses historical data from {first_date} to {last_date}. "
-    "Predictions outside that period may be unreliable. This is not a live AQI service."
+st.caption(
+    f"Historical demo data: {first_date} to {last_date}. "
+    "Later-date estimates may be unreliable; this is not a live AQI service."
 )
 
 with st.form("aqi_prediction_form"):
@@ -87,7 +86,7 @@ with st.form("aqi_prediction_form"):
     selected_date = st.date_input("Date", value=last_date)
 
     st.subheader("Pollutant readings")
-    st.caption("Enter values on the dataset's scale; its units are not documented. Leave unknown readings blank.")
+    st.caption("Enter values on the dataset's scale. Keep unknown readings at 0.0; each step changes by 0.1.")
 
     columns = st.columns(3)
     readings = {}
@@ -96,22 +95,23 @@ with st.form("aqi_prediction_form"):
             readings[pollutant] = st.number_input(
                 pollutant,
                 min_value=0.0,
-                value=None,
-                placeholder="Optional",
+                value=0.0,
+                step=0.1,
+                format="%.1f",
                 key=f"reading_{pollutant}",
             )
 
     submitted = st.form_submit_button("Estimate AQI")
 
 if submitted:
-    if all(value is None for value in readings.values()):
-        st.error("Enter at least one pollutant reading before estimating AQI.")
+    if all(value == 0.0 for value in readings.values()):
+        st.error("Enter at least one pollutant reading above 0.0.")
         st.stop()
 
     record = {
         "City": city,
         **{
-            pollutant: np.nan if readings[pollutant] is None else readings[pollutant]
+            pollutant: np.nan if readings[pollutant] == 0.0 else readings[pollutant]
             for pollutant in POLLUTANTS
         },
         "Year": selected_date.year,

@@ -34,7 +34,7 @@ python -m pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Choose a city and date, enter at least one pollutant reading, and select **Estimate AQI**. Unknown readings can be left blank and are imputed by the model. The app fits and caches a small HistGradientBoosting model when a prediction is requested; it does not need a separate model file.
+Choose a city and date, enter at least one pollutant reading, and select **Estimate AQI**. Input fields start at 0.0 and increase by 0.1; leave unknown readings at 0.0 and the model will impute them. The app fits and caches a small HistGradientBoosting model when a prediction is requested; it does not need a separate model file.
 
 ## Deploy for free with Streamlit Community Cloud
 
