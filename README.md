@@ -13,16 +13,17 @@ streamlit run app.py
 
 Choose a city and date, then enter the pollutant readings you have. The fields start at `0.0` and change by `0.1` when you use the plus or minus buttons. Leave a reading at `0.0` if you do not have it; the model will fill it in. The app trains a small model from the CSV the first time you ask for a prediction.
 
-## Deploy the app
+## Deployment
 
-The app can run on [Streamlit Community Cloud](https://share.streamlit.io/), which offers free hosting for Streamlit apps. The source repository needs `app.py`, `requirements.txt`, and `city_day.csv`.
+The app is deployed on Streamlit Community Cloud:
 
-1. Sign in to Streamlit Community Cloud with GitHub.
-2. Choose **Create app**.
-3. Select this repository, the `main` branch, and `app.py` as the main file.
-4. Choose **Deploy**. Streamlit installs the packages and gives you an app link.
+- **Live app:** [aqipredictorrrr.streamlit.app](https://aqipredictorrrr.streamlit.app/)
+- **Source repository:** [Karthik-Billava/aqi_predictor](https://github.com/Karthik-Billava/aqi_predictor)
+- **Branch:** `main`
+- **App file:** `app.py`
+- **Dependencies:** `requirements.txt`
 
-See Streamlit's [deployment guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy) for details.
+The app reads `city_day.csv` from the repository and trains its cached model the first time a prediction is requested. It does not use a separately uploaded model file or live pollutant data.
 
 ## Run the notebook
 
