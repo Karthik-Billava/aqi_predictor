@@ -6,25 +6,46 @@ This project explores and compares regression models for estimating a city's dai
 
 - `city_day.csv` — the dataset used by the notebook.
 - `city_day_aqi_prediction.ipynb` — data inspection, exploratory analysis, preprocessing, model comparison, and final evaluation.
+- `app.py` — a simple form for entering readings and estimating AQI.
+- `requirements.txt` — Python packages used by the app.
 
-## Requirements
+## Run the notebook
 
-Python 3.9 or newer is recommended. Install the notebook dependencies with:
+Install the notebook packages with:
 
 ```bash
 python -m pip install pandas numpy matplotlib seaborn scikit-learn jupyter
 ```
 
-## Run the notebook
+Open a terminal in the project directory and start Jupyter:
 
-1. Open a terminal in the project directory.
-2. Start Jupyter:
+```bash
+jupyter notebook city_day_aqi_prediction.ipynb
+```
 
-   ```bash
-   jupyter notebook city_day_aqi_prediction.ipynb
-   ```
+Run the cells from top to bottom. Keep `city_day.csv` in the same directory as the notebook.
 
-3. Run the cells from top to bottom. Keep `city_day.csv` in the same directory as the notebook.
+## Run the prediction app locally
+
+Install the app packages and start Streamlit:
+
+```bash
+python -m pip install -r requirements.txt
+streamlit run app.py
+```
+
+Choose a city and date, enter at least one pollutant reading, and select **Estimate AQI**. Unknown readings can be left blank and are imputed by the model. The app fits and caches a small HistGradientBoosting model when a prediction is requested; it does not need a separate model file.
+
+## Deploy for free with Streamlit Community Cloud
+
+1. Push this repository to GitHub. The repository must include `app.py`, `requirements.txt`, and `city_day.csv`.
+2. Create a free account at [Streamlit Community Cloud](https://share.streamlit.io/) and connect your GitHub account.
+3. Choose **Create app**, then select this repository, the `main` branch, and `app.py` as the app file.
+4. Select **Deploy**. Streamlit installs the packages from `requirements.txt` and gives you a public app link.
+
+See the [official deployment guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy) for screenshots and current options.
+
+The app loads the CSV on startup and trains the model the first time a prediction is requested. The dataset ends on 2020-07-01, so predictions for later dates are outside the training period and may be unreliable. The app does not fetch live pollutant readings.
 
 ## Workflow
 
